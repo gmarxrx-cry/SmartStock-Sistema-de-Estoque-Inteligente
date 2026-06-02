@@ -5,13 +5,12 @@ def buscaLogin(usuarioLog, senhaLog):
     cursor = db.cursor()
     cursor.execute("""
                    SELECT * FROM usuarios
-                   WHERE Usuario = ? AND Senha = ?
+                   WHERE usuario = ? AND senha = ?
                    """,
                    (usuarioLog, senhaLog))
-    resultado = buscaLogin
-    return(resultado)
-    db.commit()
-    db.close()     
+    resultado = cursor.fetchone()
+    db.close()
+    return(resultado)     
 
 def criarBancoUser():
     db = sqlite3.connect("usuarios.db")
