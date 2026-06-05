@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import cadastro
 import databaseUsuarios
+import estoque
 #modo escuro
 
 ctk.set_appearance_mode('dark')
@@ -32,11 +33,25 @@ def main():
 
 
     def entrar ():
+        def abrirEstoque(): 
+          frameLogin.pack_forget()
+          app.geometry("1000x700")
+
+          frameEstoque = estoque.criarTelaEstoque(app)
+          frameEstoque.pack(fill="both", expand=True)
 
         if Usuario.get() == "" or senha.get() == "":
             msg.configure(text="Por favor Preencha Os Campos")
-        elif databaseUsuarios.buscaLogin(Usuario.get(), senha.get()):
+        
+        elif databaseUsuarios.buscaLogin(
+            Usuario.get(),
+            senha.get()):
+
+            print("login ok")
             msg.configure(text="Login Realizado")
+
+            app.after(1000, abrirEstoque)
+
         else:
             msg.configure(text="Usuário ou senha incorretos")
 
@@ -52,7 +67,7 @@ def main():
 
 
 
-    msg = ctk.CTkLabel(frameLogin, text="loogin realizado")
+    msg = ctk.CTkLabel(frameLogin, text="")
     msg.pack()
 
 

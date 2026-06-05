@@ -1,16 +1,20 @@
 import sqlite3
 
 def buscaLogin(usuarioLog, senhaLog):
+
     db = sqlite3.connect("usuarios.db")
     cursor = db.cursor()
+
     cursor.execute("""
                    SELECT * FROM usuarios
                    WHERE usuario = ? AND senha = ?
                    """,
                    (usuarioLog, senhaLog))
+    
     resultado = cursor.fetchone()
     db.close()
-    return(resultado)     
+
+    return resultado is not None     
 
 def criarBancoUser():
     db = sqlite3.connect("usuarios.db")
