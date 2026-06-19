@@ -3,7 +3,13 @@ import estoque_data_base
 
     
 def criarTelaEstoque(app):
-    print("Tela estoque carregada")
+
+    def AbrirListagem():
+        frameEstoque.pack_forget()
+
+        telalistar = ListarProdutos(app)
+        telalistar.pack(fill="both", expand=True)
+
 
     frameEstoque = ctk.CTkFrame(app)
 
@@ -31,7 +37,8 @@ def criarTelaEstoque(app):
 
     botaoListar = ctk.CTkButton(
     frameEstoque,
-    text="Listar Produtos"
+    text="Listar Produtos",
+    command=AbrirListagem
     )
     botaoListar.pack(pady=10)
 
@@ -97,3 +104,26 @@ def cadastrarItens(app):
     botaoCadastrar.pack()
 
     return FrameEstoque
+
+def ListarProdutos(app):
+    framelistar = ctk.CTkFrame(app)
+
+    titulo = ctk.CTkLabel(
+        framelistar,
+        text="Lista de Produtos",
+    )
+    titulo.pack()
+
+    produtos = estoque_data_base.ListarProdutos()
+
+    for produto in produtos:
+        idProduto, nome, quantidade, preco, vencimento = produto
+        texto = f"ID: {idProduto} | {nome} | QTD: {quantidade} | PREÇO: {preco} | VENC: {vencimento}"
+    
+        ctk.CTkLabel(
+            framelistar,
+            text=texto,
+            font=("Arial", 16)
+        ).pack()
+
+    return framelistar
