@@ -8,21 +8,22 @@ CREATE TABLE IF NOT EXISTS Estoque(
     id INTEGER PRIMARY KEY,
     nomeProduto TEXT,
     quantidade INTEGER,
-    preco REAL
+    preco REAL,
+    vencimento TEXT               
 )
 """)
     
     db.commit()
     db.close()
 
-def AdicionarProduto(nomeProduto, quantidade, preco):
+def AdicionarProduto(nomeProduto, quantidade, preco, vencimento):
     db = sqlite3.connect("estoque.db")
     cursor = db.cursor()
 
     cursor.execute("""
-INSERT INTO estoque (nomeProduto, quantidade, preco)
-VALUES(?, ?, ?)                  
-""", (nomeProduto, quantidade, preco))
+INSERT INTO estoque (nomeProduto, quantidade, preco, vencimento)
+VALUES(?, ?, ?, ?)                  
+""", (nomeProduto, quantidade, preco, vencimento))
     
     db.commit()
     db.close()
@@ -49,5 +50,3 @@ def DeletarProdutos(id):
 CriarTabelaEstoque()
 
 #AdicionarProduto("Arroz", 10, 5,99)
-
-print(ListarProdutos())

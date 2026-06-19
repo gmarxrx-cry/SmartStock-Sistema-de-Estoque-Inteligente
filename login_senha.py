@@ -47,7 +47,6 @@ def main():
             Usuario.get(),
             senha.get()):
 
-            print("login ok")
             msg.configure(text="Login Realizado")
 
             app.after(1000, abrirEstoque)
